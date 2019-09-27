@@ -1,0 +1,24 @@
+{
+  "name": "mvc-sitespeedio",
+  "version": "1.0.0",
+  "description": "Enable to call sitespeed.io with an API Rest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ludovic33Fr/mvc-sitespeedio.git"
+  },
+  "keywords": [
+    "Performance",
+    "Sitespeedio",
+    "webperf"
+  ],
+  "author": "Ludovic Lefebvre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ludovic33Fr/mvc-sitespeedio/issues"
+  },
+  "homepage": "https://github.com/Ludovic33Fr/mvc-sitespeedio#readme"
+}
