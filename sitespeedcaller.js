@@ -8,14 +8,35 @@ module.exports = function (query) {
       url: query.url
     });
     */
-   let options = {
-       urls: [query.url]
-   };
 
-    //outputFolder: dir.path,
-    
+   let options = {}
+    if (query.mobile == "mobile") {
+        options = {
+            urls: query.urls,
+            mobile: query.mobile,
+            browsertime: {
+             connectivity: {
+                 profile: "3gfast"
+             },
+             browser: "chrome",
+             chrome: {
+                    mobileEmulation: {
+                        deviceName: "iPhone 6"
+                    }
+                } 
+            } 
+        };
+    } else {
+        options = {
+            urls: query.urls,
+            browsertime: {
+                connectivity: {
+                    iterations: 1
+                }
+            }
+        };
+    }
     console.log(query.url);
-
 
     sitespeed.run(options).then((result) => {
         if (result.errors.length > 0) {
