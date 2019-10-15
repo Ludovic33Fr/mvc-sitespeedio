@@ -3,7 +3,8 @@
 let router = require('express').Router();
 
 // Import routes
-let sscaller = require("./sitespeedcaller")
+let sscaller = require("./sitespeedcaller");
+let ssresult = require("./sitespeedresult");
 
 // Set default API response
 router.get('/', function (req, res) {
@@ -15,9 +16,16 @@ router.get('/', function (req, res) {
 
 // Set test API
 router.post('/test', function(request, response){
+    ssresult(request.body);
+    
+    response.send(request.body);
+  });
+
+// Set result API
+router.post('/result', function(request, response){
     sscaller(request.body);
-    //console.log(request.body);      // your JSON
-    response.send(request.body);    // echo the result back
+    
+    response.send(request.body);
   });
 
 // Export API routes

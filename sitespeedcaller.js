@@ -1,44 +1,36 @@
 const sitespeed = require('sitespeed.io/lib/sitespeed');
+const util = require('./util');
 
 module.exports = function (query) { 
-    //const dir = new tmp.Dir();
-    /*
-    const options = this.options({
-      
-      url: query.url
-    });
-    */
 
-   let options = {}
-    if (query.mobile == "mobile") {
-        options = {
-            urls: query.urls,
-            mobile: query.mobile,
-            browsertime: {
-             connectivity: {
-                 profile: "3gfast"
-             },
-             browser: "chrome",
-             chrome: {
-                    mobileEmulation: {
-                        deviceName: "iPhone 6"
-                    }
-                } 
-            } 
-        };
-    } else {
-        options = {
-            urls: query.urls,
-            browsertime: {
-                connectivity: {
-                    iterations: 1
-                }
-            }
-        };
-    }
-    console.log(query.url);
+  if (query.nbIteration == null) {
+    query.nbIteration = 1;
+  }
 
-    sitespeed.run(options).then((result) => {
+  let profile = (query.mobile == "mobile") ? "3gfast" : "native";
+
+  let chromeContent =  (query.mobile == "mobile") ? {mobileEmulation: {deviceName: "iPhone 6"}} : {};
+
+  let optionsTmp = {
+      urls: query.urls,
+      mobile: query.mobile,
+      browsertime: {
+      connectivity: {
+          profile: profile,
+          iterations: query.nbIteration
+      },
+      browser: "chrome",
+      chrome: chromeContent
+    } 
+  };
+
+  if (query.mobile == "desktop") {
+    optionsTmp.mobile = null;
+  }
+    //console.log(optionsTmp);
+    console.log(util.getFormatTime());
+
+    sitespeed.run(optionsTmp).then((result) => {
         if (result.errors.length > 0) {
           //done(false);
           console.log(false);
@@ -56,5 +48,7 @@ module.exports = function (query) {
           //done();
           console.log(true);
         }
+
+        console.log(result);
       });
 };
