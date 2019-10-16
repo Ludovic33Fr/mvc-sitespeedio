@@ -15,14 +15,37 @@ router.get('/', function (req, res) {
 });
 
 // Set test API
-router.post('/test', function(request, response){
-    ssresult(request.body);
+router.get('/result', function(request, response){
+    var res = ssresult.ListAllDomain();
     
-    response.send(request.body);
+    response.json(res);
+  });
+router.get('/result/:domain', function(request, response){
+    var res = ssresult.ListAllTests(request.params.domain);
+    
+    response.json(res);
+  });
+router.get('/result/:domain/:testHour/:fileName*', function(request, response){
+    
+    var dirname = ssresult.GetAbsolutePath(request.params.domain, request.params.testHour);
+    var filename = request.params.fileName
+    if (filename == null) {
+        response.sendFile(dirname + '/index.html');
+    } else {
+        response.sendFile(dirname + "/" + filename);
+    }
   });
 
+  router.get('/result/:domain/:testHour', function(request, response){
+    
+    var dirname = ssresult.GetAbsolutePath(request.params.domain, request.params.testHour);
+    response.sendFile(dirname + '/index.html');
+  });
+
+  
+
 // Set result API
-router.post('/result', function(request, response){
+router.post('/test', function(request, response){
     sscaller(request.body);
     
     response.send(request.body);
