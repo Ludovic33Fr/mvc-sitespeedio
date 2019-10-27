@@ -20,35 +20,31 @@ router.get('/result', function(request, response){
     
     response.json(res);
   });
-router.get('/result/:domain', function(request, response){
+
+  // List all the results available for one domain
+  router.get('/result/:domain', function(request, response){
     var res = ssresult.ListAllTests(request.params.domain);
     
     response.json(res);
   });
-router.get('/result/:domain/:testHour/:fileName*', function(request, response){
-    
-    var dirname = ssresult.GetAbsolutePath(request.params.domain, request.params.testHour);
-    var filename = request.params.fileName
-    if (filename == null) {
-        response.sendFile(dirname + '/index.html');
-    } else {
-        response.sendFile(dirname + "/" + filename);
-    }
-  });
 
-  router.get('/result/:domain/:testHour', function(request, response){
+  // Send the result report for one test
+router.get('/result/:domain/:testHour', function(request, response){
     
     var dirname = ssresult.GetAbsolutePath(request.params.domain, request.params.testHour);
     response.sendFile(dirname + '/index.html');
   });
 
-  
-
-// Set result API
-router.post('/test', function(request, response){
-    sscaller(request.body);
+// Send ressources html, js , css needed to display a report
+router.get('/result/:domain/:testHour/*', function(request, response){
     
-    response.send(request.body);
+    var domain = request.params.domain;
+    var testHour =  request.params.testHour
+
+    var dirname = ssresult.GetAbsolutePath(domain, testHour);
+    var oldPath = "/result/" + domain + "/" + testHour;
+    var path = request.url.replace(oldPath, dirname);
+    response.sendFile(path);
   });
 
 // Export API routes

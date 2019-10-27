@@ -11,6 +11,16 @@ module.exports = function (query) {
 
   let chromeContent =  (query.mobile == "mobile") ? {mobileEmulation: {deviceName: "iPhone 6"}} : {};
 
+  let budgetContent = {
+    config: {
+      "budget": {
+         "timings": {
+           "SpeedIndex":1000
+         }
+      }
+     }
+  };
+
   let optionsTmp = {
       urls: query.urls,
       mobile: query.mobile,
@@ -20,7 +30,8 @@ module.exports = function (query) {
           iterations: query.nbIteration
       },
       browser: "chrome",
-      chrome: chromeContent
+      chrome: chromeContent, 
+      budget: budgetContent
     } 
   };
 
