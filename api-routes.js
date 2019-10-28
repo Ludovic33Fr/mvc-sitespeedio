@@ -14,6 +14,12 @@ router.get('/', function (req, res) {
     });
 });
 
+// Run a test
+router.post('/test', function(request, response){
+    sscaller(request.body);
+    response.send(request.body);
+})
+
 // Set test API
 router.get('/result', function(request, response){
     var res = ssresult.ListAllDomain();
