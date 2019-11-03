@@ -1,6 +1,7 @@
 'use strict';
 
 const moment = require('moment');
+const url=require('url');
 
 const { readdirSync, statSync, existsSync, readFileSync } = require('fs')
 const { join, resolve } = require('path')
@@ -12,6 +13,16 @@ const ifExist = p => existsSync(p)
 const getContent = p => readFileSync(p, 'utf8');
 
 const toAbsolutePath = p => resolve(p)
+
+function getResultUrl(ddate, urlList) {
+  const res = [];
+  urlList.forEach(function(x) {
+    var domain = url.parse(x).hostname;
+    res.push('/' + domain + '/' + ddate);
+  });
+
+  return res;
+}
 
 function getFormatTime() {
     var now     = new Date(); 
@@ -25,8 +36,7 @@ function getFormatTime() {
     var result = year+'-'+month+'-'+day+'-'+hour+'-'+minute+'-'+second;    
 
     var now = new Date();
-    var dateString = moment(now).format('YYYY-MM-DD');
-    
+    var dateString = moment(now).format('YYYY-MM-DD');  
     var dateStringWithTime = moment(now).format('YYYY-MM-DD-HH-mm-ss');
 
     return dateStringWithTime;
@@ -34,5 +44,5 @@ function getFormatTime() {
 
 
 module.exports = {
-    getFormatTime, dirs, ifExist, getContent, toAbsolutePath
+    getFormatTime, dirs, ifExist, getContent, getResultUrl, toAbsolutePath
 }

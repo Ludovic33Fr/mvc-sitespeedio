@@ -10,6 +10,9 @@ let app            =        express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const args = process.argv;
+console.log(args);
+
 // Setup server port
 var port = process.env.PORT || 8080;
 // Send message for default URL

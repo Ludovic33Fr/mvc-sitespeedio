@@ -16,8 +16,8 @@ router.get('/', function (req, res) {
 
 // Run a test
 router.post('/test', function(request, response){
-    sscaller(request.body);
-    response.send(request.body);
+    var res = sscaller(request.body);
+    response.send(res);
 })
 
 // Set test API
